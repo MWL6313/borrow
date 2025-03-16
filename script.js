@@ -4,26 +4,10 @@ const GAS_API_URL = `${CORS_PROXY}https://script.google.com/macros/s/AKfycbxpMKl
 let allUsers = [];
 let custodiansData = {}; // 存放每個物品的保管人清單
 
-// ✅ 取得 API 數據（支援 CORS）
+// ✅ 取得 API 數據
 async function fetchFromAPI(action) {
-    try {
-        console.log(`🚀 發送請求到 API: ${GAS_API_URL}?action=${action}`);
-        const response = await fetch(`${GAS_API_URL}?action=${action}`, {
-            method: "GET",
-            headers: {
-                "Accept": "application/json"
-            }
-        });
-
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-        let result = await response.json();
-        console.log(`✅ API 回應 (${action}):`, result);
-        return result;
-    } catch (error) {
-        console.error(`❌ API 錯誤 (fetchFromAPI - ${action}):`, error);
-        return { users: [], custodians: {} }; // 確保程式不會崩潰
-    }
+    const response = await fetch(`${GAS_API_URL}?action=${action}`);
+    return await response.json();
 }
 
 
