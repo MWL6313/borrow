@@ -34,7 +34,7 @@ async function fetchFromAPI(action) {
     }
 }
 
-// ✅ 借用物品，增加錯誤處理
+// ✅ 確保 `POST` 請求符合 Google Apps Script 的 CORS 設定
 async function borrowItem() {
     let itemId = document.getElementById("itemId").value;
     let userId = document.getElementById("userId").value;
@@ -53,7 +53,6 @@ async function borrowItem() {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            mode: "cors",
             body: JSON.stringify({ itemId, userId })
         });
 
@@ -62,7 +61,7 @@ async function borrowItem() {
         }
 
         let result = await response.json();
-
+        
         if (!result || !result.message) {
             throw new Error("API 回應格式錯誤");
         }
