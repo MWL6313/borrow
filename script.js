@@ -1,29 +1,40 @@
 let allUsers = [];
 let custodiansData = {}; // 存放每個物品的保管人清單
 
-const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzLALDQfcRUkgeyJXfwj8UGU_jTpeW0TbWAxQXRTI9unevnFzUKwfKC5uRMf29Y2Y-V/exec";
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyPhHSwQuxNhBLmVsE-BS5FFEtl7TOVfarh6djKidSGe1OKoc4ExPHRT2pCCjnt3OGa/exec";
 
-// ✅ 取得 API 數據
+// ✅ 取得 API 數據，加入錯誤處理
 async function fetchFromAPI(action) {
     try {
         console.log(`🚀 發送請求到 API: ${GAS_API_URL}?action=${action}`);
+
         const response = await fetch(`${GAS_API_URL}?action=${action}`, {
             method: "GET",
-            headers: { "Accept": "application/json" }
+            headers: {
+                "Accept": "application/json"
+            },
+            mode: "cors"
         });
 
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
         let result = await response.json();
+
+        if (!result || typeof result !== "object") {
+            throw new Error(`Invalid JSON response from API: ${result}`);
+        }
+
         console.log(`✅ API 回應 (${action}):`, result);
         return result;
     } catch (error) {
         console.error(`❌ API 錯誤 (fetchFromAPI - ${action}):`, error);
-        return { users: [], custodians: [] };
+        return { users: [], custodians: {}, items: [] }; // 確保程式不會崩潰
     }
 }
 
-
-
-// ✅ 借用物品
+// ✅ 借用物品，增加錯誤處理
 async function borrowItem() {
     let itemId = document.getElementById("itemId").value;
     let userId = document.getElementById("userId").value;
@@ -42,14 +53,21 @@ async function borrowItem() {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
+            mode: "cors",
             body: JSON.stringify({ itemId, userId })
         });
 
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
         let result = await response.json();
-        console.log("✅ 借用結果:", result.message);
 
+        if (!result || !result.message) {
+            throw new Error("API 回應格式錯誤");
+        }
+
+        console.log("✅ 借用結果:", result.message);
         document.getElementById("result").innerText = result.message;
 
         // 借用成功後，重新載入可借用物品
@@ -60,29 +78,34 @@ async function borrowItem() {
     }
 }
 
-
-// ✅ 載入可借用的物品
+// ✅ 載入可借用的物品，確保 API 回傳正確格式
 async function loadItems() {
-    let items = await fetchFromAPI("getAvailableItems");
-    let itemSelect = document.getElementById("itemId");
+    let data = await fetchFromAPI("getAvailableItems");
 
+    if (!data || !Array.isArray(data.items)) {
+        console.error("❌ API 回傳的物品資料格式錯誤", data);
+        return;
+    }
+
+    let itemSelect = document.getElementById("itemId");
     itemSelect.innerHTML = '<option value="">📱 請選擇物品</option>'; // 預設選項
-    items.forEach(item => {
+
+    data.items.forEach(item => {
         let option = document.createElement("option");
         option.value = item;
         option.textContent = item;
         itemSelect.appendChild(option);
     });
 
-    console.log("📌 可借用物品:", items);
+    console.log("📌 可借用物品:", data.items);
 }
 
 // ✅ 載入所有使用者 + 保管人清單
 async function loadUsersAndCustodians() {
     let data = await fetchFromAPI("getUsersAndCustodians");
 
-    if (!data || !data.users || !data.custodians) {
-        console.error("❌ 錯誤: 無法獲取使用者與保管人資料", data);
+    if (!data || !data.users || !data.custodians || !Array.isArray(data.users)) {
+        console.error("❌ API 回應錯誤，無法獲取使用者與保管人資料", data);
         return;
     }
 
@@ -115,11 +138,9 @@ function loadUsersWithPriority(itemId) {
     console.log("📌 其他使用者:", otherUsers);
 }
 
-
 // ✅ 當頁面載入時，初始化數據
 window.onload = async function () {
     await loadItems();
     await loadUsersAndCustodians();
 };
-
 
