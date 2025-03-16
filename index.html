@@ -6,19 +6,27 @@
     <title>物品借用系統</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="https://github.githubassets.com/favicons/favicon.png">
-
 </head>
 <body>
     <div class="container">
         <h2>油品調度中心<br>手機借用系統</h2>
+
         <label for="itemId">📌 物品：</label>
-        <select id="itemId"></select>
+        <select id="itemId" onchange="loadUsersWithPriority(this.value)">
+            <option value="">請選擇物品📱</option>
+        </select>
+
         <label for="userId">👤 使用者：</label>
-        <select id="userId"></select>
+        <select id="userId">
+            <option value="">請選擇使用者</option>
+        </select>
+
         <button onclick="borrowItem()">✅ 借用</button>
         <p id="result"></p>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
+
 
