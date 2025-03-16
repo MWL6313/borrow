@@ -8,36 +8,37 @@ body {
     justify-content: flex-start;
     height: 100vh;
     background-color: #f4f4f4;
-    padding: 40px; /* ✅ 適度減少 padding */
+    padding: 60px; /* ✅ 適度減少 padding */
     margin: 0;
 }
 
 /* ✅ 主要容器 */
 .container {
     background: white;
-    padding: 50px; /* ✅ 稍微減少 padding */
+    padding: 75px; /* ✅ 稍微減少 padding */
     border-radius: 30px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
     text-align: center;
-    width: 95%; /* ✅ 適應不同裝置 */
-    max-width: 600px;
+    width: 98%; /* ✅ 適應不同裝置 */
+    max-width: 650px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+
 /* ✅ 標題 */
 h2 {
-    font-size: 60px; /* ✅ 適度減小 */
-    margin-bottom: 40px;
+    font-size: 72px; /* ✅ 適度減小 */
+    margin-bottom: 60px;
 }
 
 /* ✅ 表單標籤 */
 label {
-    font-size: 42px; /* ✅ 提高可讀性 */
+    font-size: 54px; /* ✅ 提高可讀性 */
     font-weight: bold;
     display: block;
-    margin: 40px 0 20px;
+    margin: 60px 0 30px;
 }
 
 /* ✅ 下拉選單 */
@@ -80,8 +81,8 @@ button:hover {
 
 /* ✅ 確保結果文字顯示正確 */
 p {
-    font-size: 42px;
-    margin-top: 30px;
+    font-size: 54px;
+    margin-top: 50px;
     color: green;
     font-weight: bold;
     white-space: pre-line; /* ✅ 保持換行 */
