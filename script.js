@@ -1,4 +1,4 @@
-const GAS_API_URL = "https://script.google.com/macros/s/AKfycbydBa5xdhDkJSEgoXpHql7tYY5dAPoE_7ppFjIO4WmOs4DDP7jt7iCHpQOhX-LYliZY/exec";
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz71_IM260DWDf9xzKkFUJ63KXvVaXhoTN4z11mRmor7lE5f9fFoEOxdFFi9Vzf1w/exec";
 
 // ✅ 取得 API 數據
 async function fetchFromAPI(action) {
