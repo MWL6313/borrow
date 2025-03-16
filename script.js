@@ -1,4 +1,5 @@
-const GAS_API_URL = "https://script.google.com/macros/s/AKfycbyzKyBeN-VNU_JeN5WW9AJjHBb7LHjABnDa6jRzj0nmrGDlZniSkOwcy8Y7gcepzeo/exec";
+const CORS_PROXY = "https://corsproxy.io/?";
+const GAS_API_URL = `${CORS_PROXY}https://script.google.com/macros/s/AKfycbyzKyBeN-VNU_JeN5WW9AJjHBb7LHjABnDa6jRzj0nmrGDlZniSkOwcy8Y7gcepzeo/exec`;
 
 let allUsers = [];
 let custodiansData = {}; // 存放每個物品的保管人清單
