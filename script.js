@@ -1,14 +1,26 @@
-const CORS_PROXY = "https://corsproxy.io/?";
-const GAS_API_URL = `${CORS_PROXY}https://script.google.com/macros/s/AKfycbzLALDQfcRUkgeyJXfwj8UGU_jTpeW0TbWAxQXRTI9unevnFzUKwfKC5uRMf29Y2Y-V/exec`;
-
 let allUsers = [];
 let custodiansData = {}; // 存放每個物品的保管人清單
 
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzLALDQfcRUkgeyJXfwj8UGU_jTpeW0TbWAxQXRTI9unevnFzUKwfKC5uRMf29Y2Y-V/exec";
+
 // ✅ 取得 API 數據
 async function fetchFromAPI(action) {
-    const response = await fetch(`${GAS_API_URL}?action=${action}`);
-    return await response.json();
+    try {
+        console.log(`🚀 發送請求到 API: ${GAS_API_URL}?action=${action}`);
+        const response = await fetch(`${GAS_API_URL}?action=${action}`, {
+            method: "GET",
+            headers: { "Accept": "application/json" }
+        });
+
+        let result = await response.json();
+        console.log(`✅ API 回應 (${action}):`, result);
+        return result;
+    } catch (error) {
+        console.error(`❌ API 錯誤 (fetchFromAPI - ${action}):`, error);
+        return { users: [], custodians: [] };
+    }
 }
+
 
 
 // ✅ 借用物品
