@@ -1,67 +1,88 @@
+/* ✅ 全域設定，適合手機 */
 body {
     font-family: "標楷體", serif;
+    font-size: 46px; /* ✅ 適合手機的字體大小 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
     background-color: #f4f4f4;
-    text-align: center;
-    padding: 60px;
+    padding: 40px; /* ✅ 適度減少 padding */
+    margin: 0;
 }
 
+/* ✅ 主要容器 */
 .container {
     background: white;
-    padding: 50px;
+    padding: 50px; /* ✅ 稍微減少 padding */
     border-radius: 30px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-    width: 90%;
+    text-align: center;
+    width: 95%; /* ✅ 適應不同裝置 */
     max-width: 600px;
-    margin: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-label {
-    font-size: 28px;
-    font-weight: bold;
-    margin: 20px 0 10px;
+/* ✅ 標題 */
+h2 {
+    font-size: 60px; /* ✅ 適度減小 */
+    margin-bottom: 40px;
 }
 
-/* ✅ 修正 select 下拉選單 */
+/* ✅ 表單標籤 */
+label {
+    font-size: 42px; /* ✅ 提高可讀性 */
+    font-weight: bold;
+    display: block;
+    margin: 40px 0 20px;
+}
+
+/* ✅ 下拉選單 */
 select {
-    width: 90%;  
-    max-width: 500px;  
-    padding: 15px;
-    font-size: 24px;
-    border-radius: 10px;
-    border: 2px solid #888;
-    margin-bottom: 20px;
+    width: 100%; /* ✅ 滿版適應手機 */
+    padding: 30px; /* ✅ 增加觸控區域 */
+    font-size: 42px; /* ✅ 適合手機閱讀 */
+    border-radius: 25px;
+    border: 4px solid #888;
+    margin-bottom: 30px;
     background-color: white;
     cursor: pointer;
-    appearance: auto;  /* ✅ 確保不同瀏覽器都能顯示 */
+    appearance: auto; /* ✅ 確保不同瀏覽器顯示一致 */
 }
 
-/* ✅ 修正 iOS & Mac Safari 下拉選單無法展開問題 */
+/* ✅ 確保 iOS Safari 可正確顯示選單 */
 select:focus {
-    outline: 3px solid #007bff; /* 加入可視焦點 */
+    outline: 4px solid #007bff; /* ✅ 可視焦點 */
 }
 
-/* ✅ 修正 button */
+/* ✅ 按鈕設定 */
 button {
+    margin: 30px 0; /* ✅ 適度增加間距 */
+    padding: 35px; /* ✅ 提高可點擊區域 */
+    border-radius: 25px;
+    border: 4px solid #888;
+    font-size: 42px;
+    width: 100%;
     background-color: #007bff;
     color: white;
-    font-size: 28px;
     font-weight: bold;
     cursor: pointer;
     transition: background 0.3s;
 }
 
+/* ✅ 按鈕 hover 效果 */
 button:hover {
     background-color: #0056b3;
 }
 
-/* ✅ 確保結果文字顯示 */
+/* ✅ 確保結果文字顯示正確 */
 p {
-    font-size: 22px;
-    margin-top: 20px;
+    font-size: 42px;
+    margin-top: 30px;
     color: green;
     font-weight: bold;
+    white-space: pre-line; /* ✅ 保持換行 */
 }
-
