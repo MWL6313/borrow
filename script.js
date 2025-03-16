@@ -1,4 +1,7 @@
-const GAS_API_URL = "https://script.google.com/macros/s/AKfycbz71_IM260DWDf9xzKkFUJ63KXvVaXhoTN4z11mRmor7lE5f9fFoEOxdFFi9Vzf1w/exec";
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzm7hlpXldScyfyiKvIJUTYQPA_-JT1X0PIwjxAaFQSf38T7lr9WAC0fPpOxaM4QK6w/exec";
+
+let allUsers = [];
+let custodiansData = {}; // 存放每個物品的保管人清單
 
 // ✅ 取得 API 數據
 async function fetchFromAPI(action) {
@@ -29,6 +32,8 @@ async function borrowItem() {
 async function loadItems() {
     let items = await fetchFromAPI("getAvailableItems");
     let itemSelect = document.getElementById("itemId");
+    itemSelect.innerHTML = '<option value="">請選擇物品📱</option>'; // 預設選項
+
     items.forEach(item => {
         let option = document.createElement("option");
         option.value = item;
@@ -37,11 +42,24 @@ async function loadItems() {
     });
 }
 
-// ✅ 載入使用者清單
-async function loadUsers() {
-    let usersData = await fetchFromAPI("getUsersAndCustodians");
+// ✅ 載入所有使用者 + 保管人清單
+async function loadUsersAndCustodians() {
+    let data = await fetchFromAPI("getUsersAndCustodians");
+    allUsers = data.users; // 所有使用者
+    custodiansData = data.custodians; // 保管人對應物品的清單
+}
+
+// ✅ 當選擇物品時，優先顯示保管人
+function loadUsersWithPriority(itemId) {
     let userSelect = document.getElementById("userId");
-    usersData.users.forEach(user => {
+    userSelect.innerHTML = '<option value="">請選擇使用者</option>'; // 預設選項
+
+    let prioritizedUsers = custodiansData[itemId] || []; // 取出該物品的保管人
+    let otherUsers = allUsers.filter(user => !prioritizedUsers.includes(user)); // 其他使用者
+
+    let finalUserList = prioritizedUsers.concat(otherUsers); // 先顯示保管人，再顯示其他人
+
+    finalUserList.forEach(user => {
         let option = document.createElement("option");
         option.value = user;
         option.textContent = user;
@@ -49,9 +67,8 @@ async function loadUsers() {
     });
 }
 
-// ✅ 當頁面載入時初始化
+// ✅ 當頁面載入時，初始化數據
 window.onload = async function () {
     await loadItems();
-    await loadUsers();
+    await loadUsersAndCustodians();
 };
-
