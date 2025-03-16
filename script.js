@@ -1,4 +1,4 @@
-const GAS_API_URL = "https://script.google.com/macros/s/AKfycbycw_Ds4RHeYdSzMwEzcGP6ONEiXhQEpQ3F9x0Z0ElMj7nSMXnFxSnDogpNMNHurMsy/exec";
+const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxocbu3HRi4Lsbs7G0OwlYF5OioHGyXex2Um349Leh4KSe4gSosyWfWDNAbzQDjhrkK/exec";
 
 let allUsers = [];
 let custodiansData = {}; // 存放每個物品的保管人清單
